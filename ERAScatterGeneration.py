@@ -3,7 +3,6 @@ import pandas as pd
 import numpy as np
 import seaborn as sns; sns.set_theme()
 import matplotlib.pyplot as plt
-import marioFunc as marioF
 
 color_dict = dict({
                 #Dark Grey
@@ -29,10 +28,6 @@ color_dict = dict({
                 #Orange
                 8: [255/ 255.0, 146/ 255.0, 51/ 255.0]})
 
-
-inputFile = 'inputdata/FullData_AllLevels.csv'
-
-metric1, metric2 = marioF.enum_MarioMetrics.PipeCount, marioF.enum_MarioMetrics.BlockCount
 
 output_fold = 'output/scatterplots/'
 
@@ -110,21 +105,5 @@ def generate_era_scatterplot(input_df, metric1, metric2, file_name, plot_title, 
     plt.savefig(file_name,dpi=300, bbox_inches="tight")
     plt.close()
 
-
-
-def main():
-
-    
-    df_metricdata = pd.read_csv(inputFile)
-
-    mario_gens = []
-    for gen in marioF.enum_MarioGenerators:
-        mario_gens.append(gen.name)
-
-    generate_era_scatterplot(df_metricdata,metric1,metric2, "ERAScatterPlot",True, mario_gens)
-
-
-if __name__ == "__main__":
-    main()
 
 

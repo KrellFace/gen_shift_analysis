@@ -111,8 +111,6 @@ def create_combined_df_highres_maps():
     
     return pd.concat(individual_dfs, ignore_index=True)
 
-
-
 def create_combined_df_all_isovist_sheets(file_path):
     all_dfs = []
     for sheet in enum_IsovistHybridMapSheets:
@@ -157,9 +155,6 @@ def create_combined_df_all_isovist_sheets(file_path):
     combined_df = pd.concat(all_dfs, axis=0, ignore_index=True)
     return combined_df
 
-
-
-
 def get_isovist_metric_names_list(usingFitness = False, fitnessMetric = enum_IsovistMetrics.Diversity):
     
     full_mets = []
@@ -168,8 +163,6 @@ def get_isovist_metric_names_list(usingFitness = False, fitnessMetric = enum_Iso
             full_mets.append(metric.name)
     return full_mets
 
-
-
 def get_isovist_metrics_list(usingFitness = False, fitnessMetric = enum_IsovistMetrics.Diversity):
     
     full_mets = []
@@ -177,7 +170,6 @@ def get_isovist_metrics_list(usingFitness = False, fitnessMetric = enum_IsovistM
         if(not usingFitness or metric is not fitnessMetric):
             full_mets.append(metric)
     return full_mets
-
 
 def get_isovist_sheets_list():
     
