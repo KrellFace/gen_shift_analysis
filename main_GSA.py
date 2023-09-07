@@ -11,30 +11,23 @@ import seaborn as sns; sns.set_theme()
 from sklearn import preprocessing
 from sklearn.manifold import TSNE
 import isovistFunc as isoF
-import ERAScatterGeneration as scatterGen
+import ScatterGeneration as scatterGen
 
 from sklearn.decomposition import PCA
-
-#MARIO METRIC FILES
-short_mario_inputFile = 'inputdata/FullData_10LevelsPerGen.csv'
-main_mario_inputFile = 'inputdata/FullData_AllLevels.csv'
 
 #ISOVIST FILES
 isovist_fulldata = 'inputdata/Isovist Raw Data.xlsx'
 assembled_isovist_data = 'inputdata/all_maps_isovist_combined_data.csv'
 isovist_pca_data = 'inputdata/Isovist_PCA_Data.csv'
-test_matched_pairs = 'inputdata/Base_Settlement_1_MatchedPairs.csv'
-test_matched_pairs_1000 = 'inputdata/TEST_Base_Settlement_1_MatchedPairs_1000.csv'
 #highres_pca_data = 'inputdata/highres_pca_data.csv'
 
 basemap_settlement6_matched_pairs = 'inputdata/BaseMap_Settlement_6_MatchedPairs.csv'
 
-hybrid_only_pca_data = 'inputdata/hybrid_only_pcadata.csv'
 volcano_only_pca_data = 'inputdata/volcano_only_pcadata.csv'
 
 #CONFIG
 buck_cnt = 20
-out_folder = 'TestRunV2'
+out_folder = 'Run_Name_Here'
 
 
 overall_start_time = 0
@@ -186,20 +179,6 @@ def apply_pca_to_isovist_data(isovist_df, save_scaled_data = False, saved_data_p
 
     pca_df = pd.DataFrame(projectedValues, columns = ['PCA 1', 'PCA 2'])
 
-    #iso_id = isovist_df['Isovist_ID']
-    #pca_df.insert(0,"Isovist_ID", iso_id)
-    #mapnames = isovist_df['MapName']
-    #pca_df.insert(1,"MapName", mapnames)
-
-    #print("OG Iso DF")
-    #print(isovist_df.head)
-    #print("New PCA DF - Pre new Cols")
-    #print(pca_df.head)
-
-    #print("Isovist df head before being used for assignment to PCA data")
-    #print(isovist_df.head)
-
-
     pca_df['Isovist_ID'] = isovist_df['Isovist_ID']
     pca_df['MapName'] = isovist_df['MapName']
 
@@ -207,14 +186,6 @@ def apply_pca_to_isovist_data(isovist_df, save_scaled_data = False, saved_data_p
         data_scaled['Isovist_ID'] = isovist_df['Isovist_ID']
         data_scaled['MapName'] = isovist_df['MapName']
         data_scaled.to_csv(saved_data_path)
-
-    
-    #print("PCA df head after assignment from iso data")
-    #print(pca_df.head)
-
-
-    #print("Isovist PCA Head:")
-    #print(pca_df.head)
 
     return pca_df
 
@@ -233,12 +204,7 @@ def add_map_id_column_to_isovist_data(input_df, name_list):
 
 
 def plot_isovist_shifts_and_largest_shifts_for_pair(map1, map2, pca_file_name, isovist_file_name, run_folder, fraction_to_check):
-        #FIND AND PLOT ISOVIST SHIFTS AND LARGEST SHIFTS
 
-    #Generate location matches
-    #map1 = 'BaseMap'
-    #map2 = 'Settlement_6'
-    #pca_file = volcano_only_pca_data
 
     full_isovist_df = pd.read_csv(isovist_file_name)
     loc_matches = find_location_matched_isovists(full_isovist_df, map1, map2, 'XPos', 'YPos', 'ZPos', fraction_to_check)
@@ -280,7 +246,7 @@ def main():
     #GENERATE AND SAVE PCA DATA FOR VOLCANO MAPS
     
     
-    """
+    
     full_isovist_df = pd.read_csv(assembled_isovist_data)
 
     volcano_names = []
@@ -291,8 +257,8 @@ def main():
 
     volcano_only_pca_df = apply_pca_to_isovist_data(volcano_only_df, False, "", True, run_folder)
     volcano_only_pca_df = add_map_id_column_to_isovist_data(volcano_only_pca_df, volcano_names)
-    volcano_only_pca_df.to_csv(run_folder+'/volcano_only_pcadata.csv')
-    """
+    volcano_only_pca_df.to_csv(run_folder+'/volcano_only_pcadataV2.csv')
+    
     
     #GATHER MATCHED LOCATIONS
     
@@ -307,7 +273,6 @@ def main():
     loc_matches = find_location_matched_isovists(full_isovist_df, map1, map2, 'XPos', 'YPos', 'ZPos')
     loc_matches.to_csv(f"{run_folder}/{map1}_{map2}_MatchedPairs.csv")
     """
-    
 
     #Or Read Location Matches from file 
     

@@ -163,7 +163,6 @@ cython_debug/
 
 
 output/
-inputdata/*
-*.csv
-*.xlsx
-*.png
+Isovists_not_for_Live/*
+inputdata/Isovists not for Live/*
+inputdata/Isovist Raw Data.xlsx

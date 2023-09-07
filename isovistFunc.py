@@ -65,11 +65,8 @@ class enum_IsovistMetrics(Enum):
     RealPerimeterSize = auto()
 
 
-isovist_basemap = 'inputdata/outputsVolcano0.csv'
+isovist_basemap = 'inputdata/VolcanoBaseMap.csv'
 isovist_hybrid_basemap = 'inputdata/HybridBaseMap.csv'
-
-isovist_highres_maps = ['inputdata/HighRes_outputs0.csv', 'inputdata/HighRes_outputs6.csv', 'inputdata/HighRes_outputs15.csv']
-
 
 
 def load_isovist_data_from_sheet(file_path, sheet_name, noHeader = False):
@@ -95,21 +92,6 @@ def trim_and_rename_isovist_columns(input_df):
                                 "Clutter","Reachability","Occlusivity","DriftLength","VistaLength","RealPerimeterSize"]
     return output_df
 
-def create_combined_df_highres_maps():
-    individual_dfs = []
-    mapid_counter = 1
-    for map in isovist_highres_maps:
-        print("Processing " + map)
-        map_df =  pd.read_csv(map)
-        map_renamedcols_df = trim_and_rename_isovist_columns(map_df)
-        map_renamedcols_df.insert(0, 'Isovist_ID', range(0, 0 + len(map_renamedcols_df)))
-        map_renamedcols_df['MapID'] = mapid_counter
-        map_renamedcols_df['MapName'] = map[10:(len(map)-4)]
-        individual_dfs.append(map_renamedcols_df)
-
-        mapid_counter+=1
-    
-    return pd.concat(individual_dfs, ignore_index=True)
 
 def create_combined_df_all_isovist_sheets(file_path):
     all_dfs = []
